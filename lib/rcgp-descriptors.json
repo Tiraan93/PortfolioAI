@@ -1,0 +1,406 @@
+[
+  {
+    "name": "Fitness to practice",
+    "needsFurtherDevelopment": [
+      "Understands and follows the GMC's 'duties of a doctor' guidance. (As found in \"Good medical practice\")",
+      "Complies with accepted codes of professional practice, showing awareness of their own values and attitudes.",
+      "Applies relevant ethical, financial, legal, and regulatory frameworks within the care provided.",
+      "Evaluates their clinical care and is able to justify actions to patients, colleagues, and professional bodies.",
+      "Demonstrates insight into any personal physical or mental illness or habits which might interfere with the competent delivery of patient care.",
+      "Identifies and notifies an appropriate person when their own or a colleague's performance, conduct or health might be putting others at risk.",
+      "Responds to complaints or performance issues appropriately.",
+      "Monitors performance and demonstrates insight into their personal needs.",
+      "Demonstrates awareness of the needs of colleagues."
+    ],
+    "competent": [
+      "Demonstrates the accepted codes of practice to promote patient safety and effective team working.",
+      "Reacts promptly, respectfully, and impartially when there are concerns about self or colleagues.",
+      "Works within the limits of their own ability and expertise as a GP.",
+      "Adopts a self-directed approach to learning, engaging with assessment.",
+      "Encourages scrutiny of professional behaviour, is open to feedback and demonstrates a willingness to change.",
+      "Takes advice from appropriate people and, if necessary, engages in a referral procedure or remediation.",
+      "Uses mechanisms to reflect on and learn from complaints or performance issues to improve patient care.",
+      "Takes effective steps to address any personal health issue or behaviour that is impacting on their performance as a doctor.",
+      "Achieves a balance between professional and personal demands enabling work commitments to be met and maintaining their own health.",
+      "Adopts a proactive approach in ensuring their personal health and wellbeing."
+    ],
+    "excellent": [
+      "Encourages an organisational culture in which the health and wellbeing of all members is valued and supported, especially in the workplace.",
+      "Anticipates system or practice areas requiring improvement, and proactively rectifies them to improve patient care.",
+      "Anticipates situations that might impact on their work-life balance and seeks to minimise any adverse effects on themselves or their patients.",
+      "Fosters a supportive environment where colleagues are able to share difficulties and reflect on their performance.",
+      "Promotes the wellbeing and health of all colleagues and staff, both individually and collectively."
+    ]
+  },
+  {
+    "name": "An ethical approach",
+    "needsFurtherDevelopment": [
+      "Shows awareness of the professional codes of practice as described by the GMC in 'Good medical practice'.",
+      "Demonstrates a non-judgemental approach in dealing with patients, carers, and colleagues, respecting the rights and personal dignity of others.",
+      "Contributes to an environment where fairness, respect and participation are valued,",
+      "Recognises and takes action to address prejudice, oppression and unfair discrimination in themselves and others within teams.",
+      "Takes steps to enhance patient understanding when there are communication or cultural barriers that may be limiting a patient's ability to make an informed decision.",
+      "Records, shares, and receives information in an open, honest, sensitive, and unbiased manner.",
+      "Provides culturally sensitive healthcare, conscious of their own perspectives towards others.",
+      "Considers new cultural ideas and their implications for health provision and behaviours."
+    ],
+    "competent": [
+      "Applies 'Good medical practice' in their own clinical practice.",
+      "Reflects on how their values, attitudes and ethics might influence professional behaviour.",
+      "Identifies and discusses ethical conflicts arising within their roles as a clinician, patient advocate and leader in the health service.",
+      "Actively promotes equality of opportunity for patients to access healthcare, ensuring fairness and respect in their day-to-day practice.",
+      "Responds to complaints in a timely and appropriate manner, recognising their duty of candour.",
+      "Relates to people as individuals and challenges attitudes that dehumanise or stereotype others.",
+      "Actively promotes a culture of inclusion where everyone is welcome in general practice, regardless of background or any protected characteristics."
+    ],
+    "excellent": [
+      "Anticipates the potential for conflicts of interest and takes appropriate action to avoid these.",
+      "Anticipates and takes appropriate action in situations where discrimination or bullying might occur.",
+      "Recognises that their duty of care for their patients extends beyond the immediate team and spans the NHS and other services.",
+      "Actively supports and harnesses differences between people for the benefit of the organisation and patients alike."
+    ]
+  },
+  {
+    "name": "Communicating and consulting",
+    "needsFurtherDevelopment": [
+      "Consults to an acceptable standard but lacks focus and requires longer consultation times.",
+      "Adopts a basic personalised approach to care.",
+      "Communicates in a way that seeks to establish a shared understanding and patient involvement.",
+      "Adapts communication to the mode of consultation.",
+      "Uses knowledge of a range of consultation models or theories.",
+      "Uses language and explanations that are technically correct but not consistently tailored to the needs and characteristics of the patient.",
+      "Understands the need for effective consulting and developing an awareness of the wide range of consultation models that might be used.",
+      "Takes steps to address barriers to communication, including use of interpreters.",
+      "Develops a relationship with the patient that is effective but is focused on the problem rather than the patient.",
+      "Elicits psychological and social information to place the patient's problem in context."
+    ],
+    "competent": [
+      "Uses the most appropriate mode of consultation, including in-person and remote, taking account of individual patient needs, preferences, and safety.",
+      "Explores the patient's understanding of what has taken place.",
+      "Uses the patient's understanding to help improve the explanation offered.",
+      "Works in partnership with the patient, agreeing a shared plan that respects the patient's priorities and preference for involvement.",
+      "Consults in an organised and structured way, achieving the main tasks of the consultation in a timely manner.",
+      "Explores the patient's agenda, health beliefs and preferences",
+      "Uses language that considers the needs and characteristics of the patient, for instance when talking to children or patients with learning disabilities.",
+      "Manages consultations effectively with patients who have communication needs, different languages, cultures, beliefs or educational backgrounds.",
+      "Demonstrates a constructive and flexible approach to consulting.",
+      "Facilitates and encourages a trusted long-term relationship with 'their' doctor, using the consultation to improve access to care and enhance continuity of care."
+    ],
+    "excellent": [
+      "Uses advanced consultation skills, such as confrontation or catharsis, to achieve better patient outcomes.",
+      "Consults effectively in a focused manner, moving beyond the essential to take a holistic view of the patient's needs within the time frame of a normal consultation.",
+      "Used a variety of advanced or innovative communication techniques and resources adapted to the needs of the patient, respecting individual characteristics and differences.",
+      "Whenever possible, adopts plans that respect the patient's autonomy. When there is a difference of opinion the patient's autonomy is respected and a positive relationship is maintained."
+    ]
+  },
+  {
+    "name": "Data Gathering and interpretation",
+    "needsFurtherDevelopment": [
+      "Accumulates information in a formulaic way or gathers more than is required.",
+      "Selects examinations and investigations that are broadly in line with the patient's problems.",
+      "Demonstrates a limited range of data gathering styles and methods.",
+      "Identifies abnormal findings and results.",
+      "Displays an appropriate level of knowledge of clinical norms, measurements and investigations and is aware of how these relate to the patient's condition."
+    ],
+    "competent": [
+      "Gathers information systematically using questions appropriately targeted to the problem.",
+      "Understands the importance of, and makes appropriate use of, existing information about the problem and the patient's context.",
+      "Demonstrates different styles of data gathering and adapts these to a wide range of patients and situations.",
+      "Chooses examinations and targets investigations appropriately and efficiently.",
+      "Understands the significance and implications of findings and results and takes appropriate action.",
+      "Uses a stepwise approach, basing further enquiries, examinations, and tests on what is already known and what is later discovered."
+    ],
+    "excellent": [
+      "Identifies expertly the nature and scope of enquiry needed to investigate the problem, or multiple problems, within a short time frame.",
+      "Prioritises problems in a way that enhances patient satisfaction.",
+      "Gathers information in a wide range of circumstances and across all patient groups (including their family and representatives) in a sensitive, empathic, and ethical manner.",
+      "Utilises the predictive value of symptoms, signs, and investigations according to the features of the WPBA work and local population and applies this knowledge to their decision-making."
+    ]
+  },
+  {
+    "name": "Clinical examination and procedural skills",
+    "needsFurtherDevelopment": [
+      "Undertakes examination when appropriate and demonstrates all the basic examination skills needed as a GP.",
+      "Elicits relevant clinical signs, both normal and abnormal.",
+      "Suggests appropriate examinations and procedures related to the patient's problem(s).",
+      "Conducts examination sensitively and without causing the patient harm.",
+      "Shows awareness of personal limitations and boundaries in clinical examination.",
+      "Performs examinations and procedures with the patient's consent and with a clinically justifiable reason to do so.",
+      "Arranges the place of the examination to give the patient privacy and respect their dignity.",
+      "Observes the professional codes of practice including the use of chaperones examinations"
+    ],
+    "competent": [
+      "Conducts examinations targeted to the patient's problems.",
+      "Interprets physical signs accurately.",
+      "Varies procedure options according to circumstances and the preferences of the patient.",
+      "Identifies and reflects on ethical issues with regard to examination and procedural skills.",
+      "Recognises and acknowledges the patient's concerns before and during the examination and puts them at ease.",
+      "Shows awareness of the medico-legal background, informed consent, mental capacity, and the best interests of the patient.",
+      "Recognises the verbal and non-verbal clues that the patient is not comfortable with an intrusion into their personal space, especially the prospect or conduct of intimate examinations"
+    ],
+    "excellent": [
+      "Demonstrates a range of procedural skills to a high standard, such as joint injections, minor surgery and fitting contraceptive devices.",
+      "Engages with quality improvement initiatives with regard to examination and procedural skills.",
+      "Contributes to the development of systems that reduce risk in clinical examination and procedural skills."
+    ]
+  },
+  {
+    "name": "Decision-making and Diagnosis",
+    "needsFurtherDevelopment": [
+      "Generates differential diagnoses that may be too narrow or broad.",
+      "Generates and tests appropriate hypotheses.",
+      "Develops independent skills in decision-making and uses the support of others to confirm these are correct.",
+      "Uses decision aids (such as algorithms and risk calculators) for straightforward clinical decisions.",
+      "Justifies chosen options with evidence.",
+      "Is aware of personal limitations in knowledge and experience."
+    ],
+    "competent": [
+      "Makes diagnoses in a structured way using a problem-solving method.",
+      "Thinks flexibly around problems, generating functional solutions.",
+      "Demonstrates confidence in, and takes ownership of, own decisions while being aware of their own limitations.",
+      "Demonstrates rapid and safe decision-making when managing urgent clinical situations and when it is appropriate to defer an action.",
+      "Uses pattern recognition to identify diagnoses quickly, safely, and reliably.",
+      "Keeps an open mind and is able to adjust and revise decisions and diagnoses when considering new relevant information.",
+      "Addresses problems that present early and/or in an undifferentiated way by integrating all the available information to help generate a differential diagnosis.",
+      "Uses an understanding of probability based on prevalence, incidence, and natural history of illness to aid decision-making."
+    ],
+    "excellent": [
+      "Understands the benefits and limitations of pattern recognition and an analytical approach, and knows how to use them concurrently.",
+      "Reflects appropriately on complex decisions and develops mechanisms to be comfortable with these choices.",
+      "Justifies discretionary judgement, no longer relying on rules and protocols in situations of uncertainty or complexity, for example in patients with multiple problems."
+    ]
+  },
+  {
+    "name": "Clinical management",
+    "needsFurtherDevelopment": [
+      "Develops knowledge and skills to provide care to patients of all backgrounds, ages and life stages.",
+      "Facilitates continuity of care for the patient's problem, for example through effective record keeping.",
+      "Uses safe management plans, taking into account the preference of the patient.",
+      "Shows knowledge of available interventions.",
+      "Considers and arranges follow-up based on patient need.",
+      "Prescribes safely, including routinely checking on drug interactions and side effects.",
+      "Gives appropriate and specific safety-netting advice.",
+      "Understands and makes referrals, considering alternative pathways where appropriate.",
+      "Recognises acute care as part of the wider continuum of patient care."
+    ],
+    "competent": [
+      "Adapts the clinical approach to provide comprehensive care to patients who have individual perspectives and health and care needs.",
+      "Co-ordinates care for patients of all backgrounds, ages, and life stages.",
+      "Provides comprehensive continuity of care, taking into account the patient's problems and their social situation.",
+      "Varies management options responsively according to the circumstances, priorities, and preferences of those involved.",
+      "Considers a 'wait and see' approach where appropriate.",
+      "Uses effective prioritisation of problems when the patient presents with multiple issues.",
+      "Offers a variety of follow-up arrangements that are safe and appropriate.",
+      "Prescribes safely and applies local and national guidelines, including drug and non-drug therapies.",
+      "Reviews the patient's medication in terms of evidence-based prescribing, cost effectiveness and patient understanding.",
+      "Refers appropriately, taking into account all available resources.",
+      "Advocates for the patient and their carers as they navigate the health and care system.",
+      "Organises follow up of patients through multiprofessional, team-based and structured approaches.",
+      "Responds rapidly and skilfully to emergencies, with appropriate follow-up for the patient and their family.",
+      "Co-ordinates care both within the practice team and with other services.",
+      "Contributes to reflection on emergencies as significant events and how these can be used to improve patient care in the future."
+    ],
+    "excellent": [
+      "Identifies and develops strategies to improve coordination and collaborative care for individual patients of all backgrounds, ages and life stages.",
+      "Designs or improves services for identified groups of patients.",
+      "Empowers the patient with confidence to manage problems independently, together with knowledge of when to seek further help.",
+      "Challenges unrealistic patient expectations and consulting patterns with regard to follow up of current and future problems.",
+      "Develops systems for drug monitoring and safety alerts.",
+      "Identifies areas for improvement in referral processes and pathways and contributes to quality improvement."
+    ]
+  },
+  {
+    "name": "Medical complexity",
+    "needsFurtherDevelopment": [
+      "Recognises the impact of the patient's lifestyle, circumstances and environment on their health.",
+      "Identifies and recognises multiple health issues in individuals.",
+      "Encourages a person-centred approach to consider the issues that matter to an individual with multiple problems.",
+      "Identifies and tolerates clinical risks and uncertainties in the consultation.",
+      "Attempts to prioritise management options based on an assessment of patient risk.",
+      "Manages patients with multiple problems with reference to appropriate guidelines for each condition.",
+      "Demonstrates awareness of the importance of continuity of care for patients with complex needs."
+    ],
+    "competent": [
+      "Encourages the patient to participate in appropriate health promotion and disease prevention strategies.",
+      "Supports the patient in addressing social and environmental factors.",
+      "Continually encourages improvement and rehabilitation and, where appropriate, recovery.",
+      "Actively facilitates continuity of care for patients with complex needs.",
+      "Demonstrates a reasoned approach to simultaneously managing multiple health problems.",
+      "Establishes partnerships that enable a patient-centred approach to optimise care.",
+      "Manages uncertainty and communicates risk effectively.",
+      "Recognises the limitations of protocols in making decisions and explores ways of dealing with these situations with the patient and carers, consulting with colleagues when appropriate.",
+      "Actively facilitates continuity of care for patients with complex needs, either personally or across teams."
+    ],
+    "excellent": [
+      "Coordinates a team-based approach to health promotion in its widest sense, including using non-NHS resources.",
+      "Adopts a personalised care approach to monitoring, adjusting and managing concurrent health problems",
+      "Anticipates and employs a variety of strategies for managing uncertainty.",
+      "Moves comfortably beyond single condition guidelines and protocols in situations of multi-morbidity and polypharmacy, while maintaining the patient's trust.",
+      "Uses the patient's perception of risk to enhance the management plan.",
+      "Supports individuals in 'navigating' clinical pathways and continually coordinates their care."
+    ]
+  },
+  {
+    "name": "Team working",
+    "needsFurtherDevelopment": [
+      "Understands and respects the roles, skills and responsibilities of other team members.",
+      "Responds to communications from other team members in a timely and constructive manner.",
+      "Engages with, and is accessible to, other members of the team.",
+      "Understands the importance of integrating themselves into the various teams in which they participate.",
+      "Shows awareness of the diversity within the team and the potential this offers.",
+      "Shows awareness of the GPs role as a leader and co-ordinator of a team-based approach to patient care.",
+      "Uses medical records to communicate with other professionals and services to facilitate effective transfer of clinical information.",
+      "Seeks advice from other professionals and team members where appropriate."
+    ],
+    "competent": [
+      "Is an effective team member, working flexibly with the various teams involved in day-to-day primary care.",
+      "Understands the context within which different team members are working.",
+      "Appreciates the increased efficacy in delivering patient care when teams work collaboratively rather than as individuals.",
+      "Communicates proactively with team members so that patient care is enhanced, using an appropriate mode of communication for the circumstances.",
+      "Contributes positively to teams and reflects on how they work and the members interact.",
+      "Fosters a positive attitude to the opportunity and potential of a diverse team.",
+      "Anticipates and manages the problems that arise at the interfaces between different healthcare professionals, services, and organisations.",
+      "Supports the transition of patient care between professionals and teams.",
+      "Uses the skills of the wider team to enhance patient care."
+    ],
+    "excellent": [
+      "Leads a team-based approach to enhance patient care.",
+      "Approaches team development positively and creatively.",
+      "Utilises the strengths and weaknesses of each team member to improve the effectiveness of the whole team.",
+      "Understands group dynamics and utilises this to effect change.",
+      "Encourages the contribution of others, employing a range of skills including active listening.",
+      "Demonstrates the ability to work across professional, service, and organisational boundaries, such as participation in multi-agency review."
+    ]
+  },
+  {
+    "name": "Performance, learning and teaching",
+    "needsFurtherDevelopment": [
+      "Demonstrates clinical curiosity and reflective practice, engaging in learning identified through clinical learning needs.",
+      "Provides evidence of identifying and addressing learning needs using PDPs.",
+      "Obtains and acts on feedback from patients and colleagues regarding practitioner performance .",
+      "Adapts behaviour positively in response to the clinical governance activities of the organisation, including quality improvement activities and learning event analyses.",
+      "Recognises situations where patient safety could be compromised and takes action to address this.",
+      "Knows how to access the available evidence, including the medical literature, clinical performance standards and guidelines for patient care.",
+      "Uses equipment safely and complies with safety protocols.",
+      "Identifies potential for spread of infection and takes measures to reduce risk.",
+      "Contributes to the education of others.",
+      "Participates in wider learning activities."
+    ],
+    "competent": [
+      "Judges the weight of evidence, using critical appraisal skills to inform decision-making.",
+      "Shows a commitment to professional development through reflection on performance and the identification of personal learning needs.",
+      "Addresses learning needs using targeted personal development plans and demonstrates integration into future professional practice.",
+      "Systematically evaluates performance and learning against external standards, using this information to inform their learning.",
+      "Engages in learning event reviews in a timely and effective manner and promotes learning from these as a team-based exercise.",
+      "Participates in quality improvement activities and uses these to evaluate and suggest improvements in personal and practice performance, sharing their learning.",
+      "Measures and monitors the outcomes of care to ensure the safety and effectiveness of the services provided.",
+      "Identifies learning objectives and preferences, utilising appropriate methods to teach others.",
+      "Participates in the evaluation and personal development of other team members, including providing feedback."
+    ],
+    "excellent": [
+      "Moves beyond the use of existing evidence towards initiating and collaborating in research that addresses unanswered questions.",
+      "Encourages and facilitates participation and application of clinical governance activities, by involving the practice, the wider primary care team, and other organisations.",
+      "Uses professional judgement to decide when to initiate and develop protocols and when to challenge their use.",
+      "Engages in the supervision of students and colleagues.",
+      "Constructs teaching plans, evaluates the outcome of teaching sessions and seeks feedback to enable reflection on performance."
+    ]
+  },
+  {
+    "name": "Organisation, management and leadership",
+    "needsFurtherDevelopment": [
+      "Understands the overarching structure of the UK healthcare system and shows awareness of the range of services available.",
+      "Recognises the importance of generalism in coordinating patient care to provide a point of contact bridging all parts of the NHS.",
+      "Demonstrates personal organisational, leadership and time management skills so that patients and colleagues are not unreasonably inconvenienced or come to any harm.",
+      "Demonstrates awareness of and responds positively to change in the organisation.",
+      "Manages own workload responsibly.",
+      "Shows awareness of the basics of organisational, financial, and regulatory frameworks within primary care.",
+      "Uses the clinical computer systems during patient contacts, routinely recording each clinical contact in a timely manner following the record keeping standards of the organisation."
+    ],
+    "competent": [
+      "Applies the principles of generalism, including providing patient-centred care that considers external influences such as population health, environmental factors and health inequalities.",
+      "Understands the impact of broader organisational influences and pressures.",
+      "Organises self effectively with due consideration for patients and colleagues.",
+      "Demonstrates effective time management, handover skills, prioritisation, delegation and leadership.",
+      "Leads and supports change in the organisation, involving and working with the team to deliver defined outcomes.",
+      "Responds proactively and supportively when services are under pressure in a responsible and considered way.",
+      "Reports, records, and shares safety incidents effectively.",
+      "Recognises responsibility in advocating for self and colleagues through Freedom to Speak Up.",
+      "Understands the organisational financial and regulatory frameworks within primary care.",
+      "Uses the primary care organisational and IT systems routinely and effectively in patient care.",
+      "Uses the IT system during consultations whilst maintaining rapport with the patient.",
+      "Produces records that are accurate, comprehensive, concise, appropriately coded, and understandable."
+    ],
+    "excellent": [
+      "Manages a high degree of uncertainty and accepts and balances risk at individual, community and systems levels.",
+      "Actively facilitates and evaluates change in the organisation.",
+      "Takes a lead role in supporting the organisation to respond to exceptional pressures",
+      "Understands the role and responsibilities of the partnership model and/or service delivery.",
+      "Uses and modifies organisational and IT systems to facilitate clinical care and governance."
+    ]
+  },
+  {
+    "name": "Holistic practice, health promotion and safeguarding",
+    "needsFurtherDevelopment": [
+      "Understands that health is a state of physical, mental and social wellbeing and not merely the absence of disease or infirmity.",
+      "Enquires into physical, psychological, and social aspects of the patient's problem.",
+      "Recognises the impact of the problem on the patient's life.",
+      "Offers treatment and support for the physical, psychological, and social aspects of the patient's problem.",
+      "Understands the role of the GP to provide a personalised approach to each patient to help promote recovery and a healthy lifestyle, ensuring every contact counts.",
+      "Recognises that every person has a unique set of values and experiences of health and illness that may affect their use of the healthcare system.",
+      "Understands and demonstrates principles of adult and child safeguarding, recognising potential indicators of abuse, neglect, or other forms of harm, taking appropriate action."
+    ],
+    "competent": [
+      "Understands the patient in relation to their socio-economic and cultural background, using this to inform a non-judgemental discussion and enable practical suggestions for managing the patient's problem and putting them at ease.",
+      "Recognises the impact of the problem on the patient, their family and/or carers.",
+      "Recognises what matters to the patient and works collaboratively to enhance patient care.",
+      "Uses appropriate support agencies tailored to the needs of the patient and/or their family and carers.",
+      "Demonstrates the skills and assertiveness to challenge unhelpful health beliefs or behaviours, whilst remaining compassionate and non-judgemental, and maintaining a continuing and productive relationship.",
+      "Facilitates health improvement and supports self-management during illness and recovery.",
+      "Seeks to identify those who are vulnerable and reduce the risk of abuse, neglect, or other forms of harm.",
+      "Demonstrates appropriate responses to adult and child safeguarding concerns, including ensuring information is shared and referrals made appropriately."
+    ],
+    "excellent": [
+      "Recognises and shows understanding of the limits of the doctor's ability to intervene in every aspect of holistic patient care.",
+      "Facilitates appropriate long-term support for patients, their families and carers that is realistic and limits doctor dependence.",
+      "Makes effective use of tools in health promotion, such as decision aids, to improve health understanding.",
+      "Demonstrates skills and knowledge to contribute effectively to safeguarding processes and systems within the practice or locality.",
+      "Contributes to formulating policy documents and communicating effective safeguarding plans for adults or children at risk of abuse, neglect, and other forms of harm with wider agencies."
+    ]
+  },
+  {
+    "name": "Community health and environmental sustainability",
+    "needsFurtherDevelopment": [
+      "Understands the current structure of the local healthcare system, including the organisations within it.",
+      "Recognises how the limitation of resources affects healthcare.",
+      "Accesses local services where appropriate.",
+      "Appreciates the environmental impact of different parts of the NHS.",
+      "Identifies the health characteristics of the populations with whom the team works, including their cultural, occupational, epidemiological, environmental, economic, and social factors.",
+      "Identifies groups who may find accessing services harder and the greater health burden associated with this.",
+      "Understands their professional duty to help tackle health inequalities and resource issues.",
+      "Recognises the health of an individual is interconnected with the health of local populations and the planet.",
+      "Uses an awareness of local resources to enhance patient care whilst minimising inequalities and harm to the planet.",
+      "Adopts environmentally sustainable practices through adapting their prescribing or referral behaviours some of the time."
+    ],
+    "competent": [
+      "Demonstrates the breadth of GP roles across the healthcare system, such as patient advocate, family practitioner, generalist and 'gate keeper'.",
+      "Balances the needs of the individual patient, the health needs of the local communities and available resources when making referral(s).",
+      "Undertakes safe and cost-effective prescribing.",
+      "Follows protocols with appropriate flexibility incorporating the patient's preference.",
+      "Makes efforts to practise healthcare in an environmentally sustainable way.",
+      "Applies an understanding of how the characteristics of the local population shape the provision of care.",
+      "Takes proactive steps to tackle health inequalities and improve local resource equity.",
+      "Offers patients non-pharmacological options to treat common issues that are suited to the patient's environment.",
+      "Considers the environmental, social, and economic sustainability of the health service, for example changes to prescribing and considering the carbon footprint.",
+      "Uses an awareness of the changing epidemiology caused by planetary health to inform diagnoses and discussions with patients."
+    ],
+    "excellent": [
+      "Actively participates in helping to develop services that are relevant to local communities and reduce inequalities and/or improve environmental sustainability to improve healthcare.",
+      "Balances the needs of individual patients with the health needs of the local community, available resources, and environmental sustainability, managing any conflicts of interest.",
+      "Engages with organisations involved in determining and/or providing local community or health services.",
+      "Develops an understanding of the availability of natural resources (such as parks, green spaces and water) that local communities can access for health.",
+      "Advocates for improving the health of populations and the planet as well as individuals.",
+      "Uses planetary health models in day-to-day practice.",
+      "Actively identifies overprescribing and overdiagnosis to improve patient safety and practice sustainability"
+    ]
+  }
+]

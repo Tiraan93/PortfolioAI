@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+/* Fonts: bundled system stack (avoids Google Fonts fetch blocked by local SSL) */
+:root {
+  --font-jakarta: "Segoe UI", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-dm-serif: Georgia, "Times New Roman", "DM Serif Display", serif;
+  --background: #f9f2fb;
+  --background-alt: #f2e8f8;
+  --foreground: #1f1832;
+  --muted: #6c597b;
+  --muted-light: #9e84ad;
+  --card: #ffffff;
+  --card-warm: #f6effb;
+  --border: #d9c5e5;
+  --border-light: #ede3f4;
+  --navy: #1f1832;
+  --accent: #b16aba;
+  --accent-dark: #8f3e9a;
+  --accent-light: #dfc2ec;
+  --cta: #b16aba;
+  --cta-hover: #8a2b91;
+  --cta-soft: #f4e6ff;
+  --success-bg: #f4effa;
+  --success-border: #d9c8e8;
+  --success-text: #5a3d73;
+  --warning-bg: #f7effa;
+  --warning-border: #dbc6e7;
+  --warning-text: #795aa2;
+  --error-bg: #fbeaf7;
+  --error-border: #e8c4dd;
+  --error-text: #7f3f75;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-alt: var(--background-alt);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-light: var(--muted-light);
+  --color-card: var(--card);
+  --color-card-warm: var(--card-warm);
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+  --color-navy: var(--navy);
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-light: var(--accent-light);
+  --color-cta: var(--cta);
+  --color-cta-hover: var(--cta-hover);
+  --color-cta-soft: var(--cta-soft);
+  --color-success-bg: var(--success-bg);
+  --color-success-border: var(--success-border);
+  --color-success-text: var(--success-text);
+  --color-warning-bg: var(--warning-bg);
+  --color-warning-border: var(--warning-border);
+  --color-warning-text: var(--warning-text);
+  --color-error-bg: var(--error-bg);
+  --color-error-border: var(--error-border);
+  --color-error-text: var(--error-text);
+  /* Legacy alias used in components */
+  --color-accent-coral: var(--cta);
+  --color-accent-coral-dark: var(--cta-hover);
+  --font-sans: var(--font-jakarta);
+  --font-serif: var(--font-dm-serif);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+}
+
+.font-serif {
+  font-family: var(--font-dm-serif), Georgia, serif;
+}
