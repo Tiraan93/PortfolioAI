@@ -111,7 +111,7 @@ export function supportsJsonResponseFormat(): boolean {
 export function formatLLMError(error: unknown): string {
   const e = error as Record<string, unknown>;
 
-  const isString = (value: unknown): value is string => typeof value === "string";
+  const message = typeof e?.message === "string" ? e.message : undefined;
 
   // Connection-like errors (network, DNS, refused)
   const isConnectionError =
@@ -119,7 +119,8 @@ export function formatLLMError(error: unknown): string {
     e?.type === "connection_error" ||
     e?.code === "ECONNREFUSED" ||
     e?.code === "ENOTFOUND" ||
-    (isString(e?.message) && /ECONNREFUSED|ENOTFOUND|ENETUNREACH|fetch failed/i.test(e.message));
+    (message !== undefined &&
+      /ECONNREFUSED|ENOTFOUND|ENETUNREACH|fetch failed/i.test(message));
 
   if (isConnectionError) {
     const provider = getLLMProvider();
@@ -147,7 +148,7 @@ export function formatLLMError(error: unknown): string {
     if (status === 404) {
       return `Model not found (${getLLMModel()}). Set LLM_MODEL in .env.local to a model your provider supports.`;
     }
-    return e?.message || `API error (${status}).`;
+    return message || `API error (${status}).`;
   }
 
   if (e instanceof Error && e.message) return e.message;
