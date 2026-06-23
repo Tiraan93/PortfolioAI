@@ -174,7 +174,8 @@ export function formatLLMError(error: unknown): string {
     if (status === 404) {
       return `Model not found (${getLLMModel()}). Set LLM_MODEL in .env.local to a model your provider supports.`;
     }
-    return e?.message || `API error (${status}).`;
+    const message = e?.message;
+    return (isString(message) && message) || `API error (${status}).`;
   }
 
   if (e instanceof Error && e.message) return e.message;
