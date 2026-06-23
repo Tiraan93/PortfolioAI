@@ -16,6 +16,7 @@ import {
   parseJsonFromModel,
   supportsJsonResponseFormat,
 } from "@/lib/llm";
+import { rateLimit, tooManyRequestsResponse } from "@/lib/rate-limit";
 import {
   collectDuplicateDescriptorErrors,
   resolveLlmPortfolioReview,
@@ -126,6 +127,11 @@ async function generateReviews(
 
 export async function POST(request: NextRequest) {
   try {
+    const limit = await rateLimit(request, "generate-review");
+    if (!limit.success) {
+      return tooManyRequestsResponse(limit.resetMs);
+    }
+
     const body = await request.json();
     const parsed = generateReviewRequestSchema.parse(body);
     const { cases, descriptorLevels } = parsed;

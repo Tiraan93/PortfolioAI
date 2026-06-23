@@ -12,11 +12,17 @@ import {
   getSetupMessage,
   hasLLMConfigured,
 } from "@/lib/llm";
+import { rateLimit, tooManyRequestsResponse } from "@/lib/rate-limit";
 import { sanitizeGeneratedText } from "@/lib/sanitize";
 import { improveSectionRequestSchema, improveSectionResponseSchema } from "@/lib/schema";
 
 export async function POST(request: NextRequest) {
   try {
+    const limit = await rateLimit(request, "improve-section");
+    if (!limit.success) {
+      return tooManyRequestsResponse(limit.resetMs);
+    }
+
     const body = await request.json();
     const { section, currentText, instruction, caseDescription } =
       improveSectionRequestSchema.parse(body);
