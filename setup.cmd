@@ -20,7 +20,7 @@ if errorlevel 1 (
 if not exist ".env.local" (
   if exist ".env.example" (
     copy /Y ".env.example" ".env.local" >nul
-    echo Created .env.local — open it and add your GROQ_API_KEY from https://console.groq.com/keys
+    echo Created .env.local — open it and add your OPENROUTER_API_KEY from https://openrouter.ai/keys
   ) else (
     echo Warning: .env.example not found.
   )
@@ -35,7 +35,7 @@ if exist ".next" (
 
 echo.
 echo Setup complete. Next steps:
-echo   1. Edit .env.local and set GROQ_API_KEY=
+echo   1. Edit .env.local and set OPENROUTER_API_KEY=
 echo   2. Run start.cmd
 echo   3. Open http://localhost:3003/portfolio
 echo.

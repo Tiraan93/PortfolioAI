@@ -49,13 +49,29 @@ GROQ_API_KEY=gsk_...
 
 | Provider | Cost | Setup |
 |----------|------|--------|
-| **Groq** (default) | Free tier | `GROQ_API_KEY` from [console.groq.com](https://console.groq.com/keys) |
+| **OpenRouter** (default) | Free tier | `OPENROUTER_API_KEY` from [openrouter.ai/keys](https://openrouter.ai/keys); uses the `openrouter/free` model |
+| **Groq** | Free tier | `LLM_PROVIDER=groq` and `GROQ_API_KEY` from [console.groq.com](https://console.groq.com/keys) |
 | **Ollama** | Free, local | Install [Ollama](https://ollama.com), `ollama pull llama3.2`, set `LLM_PROVIDER=ollama` |
 | **OpenAI** | Paid | `LLM_PROVIDER=openai` and `OPENAI_API_KEY` |
+
+OpenRouter is OpenAI-compatible, so set `OPENROUTER_MODEL` to any [model slug](https://openrouter.ai/models) (e.g. `openrouter/free` or a specific `:free` model).
 
 Set `LLM_MODEL` to override the default model for your provider.
 
 Without any key, the app runs in **demo mode** with a sample review so you can test the UI.
+
+## Rate limiting
+
+The `/api/generate-review` and `/api/improve-section` endpoints are limited to **2 requests per IP per minute** to protect against abuse and runaway provider costs on a public deployment.
+
+For production on Vercel, add a free [Upstash Redis](https://upstash.com) so the limit is enforced across all serverless instances:
+
+```
+UPSTASH_REDIS_REST_URL=https://...upstash.io
+UPSTASH_REDIS_REST_TOKEN=...
+```
+
+Without these, it falls back to an in-memory limiter (fine for local dev, but per-instance only).
 
 ## Disclaimer
 

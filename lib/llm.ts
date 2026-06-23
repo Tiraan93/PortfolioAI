@@ -1,12 +1,17 @@
 import OpenAI from "openai";
 import { allowInsecureLLMSSL, ensureLLMNetworking } from "@/lib/llm-fetch";
 
-export type LLMProvider = "groq" | "openai" | "ollama";
+export type LLMProvider = "openrouter" | "groq" | "openai" | "ollama";
 
 const PROVIDER_CONFIG: Record<
   LLMProvider,
   { baseURL?: string; defaultModel: string; apiKeyEnv: string | null }
 > = {
+  openrouter: {
+    baseURL: "https://openrouter.ai/api/v1",
+    defaultModel: "openrouter/free",
+    apiKeyEnv: "OPENROUTER_API_KEY",
+  },
   groq: {
     baseURL: "https://api.groq.com/openai/v1",
     defaultModel: "llama-3.3-70b-versatile",
@@ -26,20 +31,28 @@ const PROVIDER_CONFIG: Record<
 export function getLLMProvider(): LLMProvider {
   const raw = process.env.LLM_PROVIDER;
   const explicit = raw ? raw.trim().toLowerCase() : undefined;
-  if (explicit === "groq" || explicit === "openai" || explicit === "ollama") {
+  if (
+    explicit === "openrouter" ||
+    explicit === "groq" ||
+    explicit === "openai" ||
+    explicit === "ollama"
+  ) {
     return explicit as LLMProvider;
   }
 
-  // Prefer OpenAI if available, otherwise fall back to Groq when explicitly configured.
+  // Auto-detect by available key. OpenRouter is preferred (free models available).
+  if (process.env.OPENROUTER_API_KEY?.trim()) return "openrouter";
   if (process.env.OPENAI_API_KEY?.trim()) return "openai";
   if (process.env.GROQ_API_KEY?.trim()) return "groq";
 
-  // Default to OpenAI to avoid confusing prompts asking for a GROQ key.
-  return "openai";
+  // Default to OpenRouter so the app points at the free OpenRouter tier.
+  return "openrouter";
 }
 
 export function getLLMProviderLabel(provider: LLMProvider = getLLMProvider()): string {
   switch (provider) {
+    case "openrouter":
+      return "OpenRouter (free tier)";
     case "groq":
       return "Groq (free tier)";
     case "ollama":
@@ -51,6 +64,8 @@ export function getLLMProviderLabel(provider: LLMProvider = getLLMProvider()): s
 
 export function getSetupMessage(provider: LLMProvider = getLLMProvider()): string {
   switch (provider) {
+    case "openrouter":
+      return "Add a free OPENROUTER_API_KEY from https://openrouter.ai/keys to .env.local, then restart the dev server.";
     case "groq":
       return "Add a free GROQ_API_KEY from https://console.groq.com/keys to .env.local (UTF-8), then restart the dev server.";
     case "ollama":
@@ -87,6 +102,15 @@ export function getLLMClient(): OpenAI | null {
   return new OpenAI({
     apiKey,
     ...(config.baseURL ? { baseURL: config.baseURL } : {}),
+    // Optional OpenRouter ranking headers (safe no-ops for other providers).
+    ...(provider === "openrouter"
+      ? {
+          defaultHeaders: {
+            "HTTP-Referer": process.env.OPENROUTER_SITE_URL?.trim() || "",
+            "X-Title": process.env.OPENROUTER_SITE_NAME?.trim() || "PortfolioAI",
+          },
+        }
+      : {}),
   });
 }
 
@@ -95,6 +119,9 @@ export function getLLMModel(): string {
   if (explicit) return explicit;
 
   const provider = getLLMProvider();
+  if (provider === "openrouter") {
+    return process.env.OPENROUTER_MODEL?.trim() || PROVIDER_CONFIG.openrouter.defaultModel;
+  }
   if (provider === "openai") {
     return process.env.OPENAI_MODEL?.trim() || PROVIDER_CONFIG.openai.defaultModel;
   }
