@@ -73,3 +73,15 @@ body {
 .font-serif {
   font-family: var(--font-dm-serif), Georgia, serif;
 }
+
+/* Generating loader: each cycling phrase fades in then gently out over its 3s slot */
+@keyframes loader-phrase {
+  0% { opacity: 0; transform: translateY(6px); }
+  12% { opacity: 1; transform: translateY(0); }
+  85% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+
+.loader-phrase {
+  animation: loader-phrase 3s ease-in-out;
+}

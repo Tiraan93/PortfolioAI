@@ -5,7 +5,8 @@ import { CapabilitySelector } from "@/components/CapabilitySelector";
 import { DescriptorLevelSelector } from "@/components/DescriptorLevelSelector";
 import type { CapabilityMode, DescriptorLevel } from "@/lib/schema";
 
-const STORAGE_KEY = "sca-portfolio-cases-draft";
+export const CASES_DRAFT_STORAGE_KEY = "sca-portfolio-cases-draft";
+const STORAGE_KEY = CASES_DRAFT_STORAGE_KEY;
 
 export type CaseDraft = {
   id: string;
@@ -18,6 +19,7 @@ type CaseInputProps = {
   cases: CaseDraft[];
   onChange: (cases: CaseDraft[]) => void;
   onSubmit: () => void;
+  onClear: () => void;
   isLoading: boolean;
   disabled?: boolean;
   descriptorLevels: DescriptorLevel[];
@@ -48,6 +50,7 @@ export function CaseInput({
   cases,
   onChange,
   onSubmit,
+  onClear,
   isLoading,
   disabled,
   descriptorLevels,
@@ -82,22 +85,19 @@ export function CaseInput({
     persistDraft(next);
   };
 
-  const updateCaseCapabilityMode = (id: string, capabilityMode: CapabilityMode) => {
+  const updateCaseCapabilities = (
+    id: string,
+    update: { mode: CapabilityMode; selected: string[] },
+  ) => {
     const next = cases.map((c) =>
       c.id === id
         ? {
             ...c,
-            capabilityMode,
-            selectedCapabilities: capabilityMode === "auto" ? [] : c.selectedCapabilities ?? [],
+            capabilityMode: update.mode,
+            selectedCapabilities: update.selected,
           }
-        : { ...c, selectedCapabilities: c.selectedCapabilities ?? [] },
+        : c,
     );
-    onChange(next);
-    persistDraft(next);
-  };
-
-  const updateCaseSelectedCapabilities = (id: string, names: string[]) => {
-    const next = cases.map((c) => (c.id === id ? { ...c, selectedCapabilities: names } : c));
     onChange(next);
     persistDraft(next);
   };
@@ -122,16 +122,19 @@ export function CaseInput({
 
   return (
     <form onSubmit={handleSubmit} className="flex h-full flex-col">
-      <label className="mb-2 block text-sm font-medium text-navy">Case descriptions</label>
-
-      <p className="mb-3 text-xs text-muted">
-        Enter a single case. Write the review notes in the first person using exact RCGP word descriptors.
-      </p>
+      <div className="mb-2 flex items-center justify-between gap-4">
+        <label className="text-sm font-medium text-navy">Enter a case below</label>
+        <button
+          type="button"
+          onClick={onClear}
+          disabled={disabled || isLoading}
+          className="inline-flex shrink-0 items-center gap-2 rounded-full border border-border bg-card px-5 py-2 text-sm font-medium text-muted shadow-sm transition-colors hover:bg-muted/10 hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Clear
+        </button>
+      </div>
 
       <div className="rounded-xl border border-border bg-background/80 p-3">
-        <div className="mb-2 flex items-center justify-between gap-2">
-          <span className="text-xs font-medium text-navy">Case 1</span>
-        </div>
         <textarea
           value={activeCase.caseDescription}
           onChange={(event) => updateCase(activeCase.id, event.target.value)}
@@ -145,10 +148,10 @@ export function CaseInput({
             )}
           <div className="mt-4">
             <CapabilitySelector
+              key={activeCase.id}
               mode={activeCase.capabilityMode}
-              onModeChange={(mode) => updateCaseCapabilityMode(activeCase.id, mode)}
               selected={activeCase.selectedCapabilities}
-              onSelectedChange={(names) => updateCaseSelectedCapabilities(activeCase.id, names)}
+              onChange={(update) => updateCaseCapabilities(activeCase.id, update)}
               disabled={disabled || isLoading}
             />
           </div>
@@ -164,7 +167,7 @@ export function CaseInput({
 
       <div className="mt-4 flex items-center justify-between gap-4">
         <p className="text-xs text-muted">
-          {validCases.length > 0 ? "Case ready." : "Enter at least 20 characters for the case."}
+          {validCases.length > 0 ? "" : "Enter at least 20 characters for the case."}
           {!capabilitiesReady && (
             <span className="text-warning-text"> Select 3 capabilities for manual mode.</span>
           )}
@@ -172,7 +175,7 @@ export function CaseInput({
         <button
           type="submit"
           disabled={disabled || isLoading || !canSubmit}
-          className="inline-flex items-center gap-2 rounded-full bg-cta px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-cta-hover disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex shrink-0 items-center gap-2 rounded-full bg-cta px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-cta-hover disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isLoading ? (
             <>
@@ -188,15 +191,8 @@ export function CaseInput({
       </div>
       <div className="mt-3 text-xs text-muted">
         <p className="font-semibold">Disclaimer</p>
-        <p className="mt-2 font-semibold">This tool can be used to generate example reflections for learning or to assist with drafting your own portfolio reflections.</p>
         <p className="mt-2">
-          If you use it for your own reflection, the case must be based on a real patient you have personally seen and must be fully anonymised. Do not enter patient, staff, hospital, GP practice, NHS Trust, location or other identifiable information.
-        </p>
-        <p className="mt-2">
-          The output is a draft only. You are responsible for reviewing, editing and ensuring the final reflection contains your own genuine thoughts, learning and insight before submitting it to your portfolio.
-        </p>
-        <p className="mt-2">
-          By clicking “Generate”, you confirm that your input is anonymised and that you remain fully responsible for all content you submit.
+          The generated reflection is a draft only. You are responsible for editing it to reflect your genuine thoughts and learning.
         </p>
       </div>
     </form>

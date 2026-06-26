@@ -34,3 +34,6 @@ yarn-error.log*
 .DS_Store
 *.pem
 *.tsbuildinfo
+
+# local Claude Code tooling (machine-specific)
+.claude/settings.local.json

@@ -11,6 +11,7 @@ type ReviewPanelProps = {
   caseDescription: string;
   isDemo?: boolean;
   onUpdateReview: (review: PortfolioReview) => void;
+  onClear?: () => void;
   demoProvider?: string | null;
 };
 
@@ -19,6 +20,7 @@ export function ReviewPanel({
   caseDescription,
   isDemo = false,
   onUpdateReview,
+  onClear,
   demoProvider,
 }: ReviewPanelProps) {
   const [improvingSection, setImprovingSection] = useState<string | null>(null);
@@ -77,18 +79,110 @@ export function ReviewPanel({
     }
   };
 
+  const requestImprovedAchievement = async (
+    descriptor: string,
+    currentText: string,
+    instruction: string,
+  ) => {
+    const response = await fetch("/api/improve-section", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        section: "achievement",
+        currentText,
+        instruction,
+        caseDescription,
+        descriptor,
+      }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error ?? "Failed to improve section.");
+    }
+    return data.improvedText as string;
+  };
+
+  const improveEvidence = async (
+    capabilityIndex: number,
+    evidenceIndex: number,
+    instruction: string,
+  ) => {
+    setImprovingSection(`cap-${capabilityIndex}-ev-${evidenceIndex}`);
+    setError(null);
+
+    try {
+      const item = review.capabilities[capabilityIndex].evidence[evidenceIndex];
+      const improved = await requestImprovedAchievement(
+        item.descriptor,
+        item.achievement,
+        instruction,
+      );
+
+      const capabilities = review.capabilities.map((cap, ci) =>
+        ci !== capabilityIndex
+          ? cap
+          : {
+              ...cap,
+              evidence: cap.evidence.map((ev, ei) =>
+                ei !== evidenceIndex ? ev : { ...ev, achievement: improved },
+              ),
+            },
+      );
+      onUpdateReview({ ...review, capabilities });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to improve section.");
+    } finally {
+      setImprovingSection(null);
+    }
+  };
+
+  const improveCapability = async (capabilityIndex: number, instruction: string) => {
+    setImprovingSection(`cap-${capabilityIndex}`);
+    setError(null);
+
+    try {
+      const cap = review.capabilities[capabilityIndex];
+      const improvedAchievements = await Promise.all(
+        cap.evidence.map((ev) =>
+          requestImprovedAchievement(ev.descriptor, ev.achievement, instruction),
+        ),
+      );
+
+      const capabilities = review.capabilities.map((c, ci) =>
+        ci !== capabilityIndex
+          ? c
+          : {
+              ...c,
+              evidence: c.evidence.map((ev, ei) => ({
+                ...ev,
+                achievement: improvedAchievements[ei],
+              })),
+            },
+      );
+      onUpdateReview({ ...review, capabilities });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to improve capabilities.");
+    } finally {
+      setImprovingSection(null);
+    }
+  };
+
   const capabilitiesCopyText = formatCapabilitiesForCopy(review);
 
   return (
     <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm">
       <div className="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-accent">Portfolio AI</p>
-          <h2 className="font-serif text-2xl font-semibold text-navy">{review.title}</h2>
-        </div>
-        <span className="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent-dark">
-          Ready
-        </span>
+        <h2 className="font-serif text-2xl font-semibold text-navy">{review.title}</h2>
+        {onClear && (
+          <button
+            type="button"
+            onClick={onClear}
+            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted shadow-sm transition-colors hover:bg-muted/10 hover:text-foreground"
+          >
+            Clear
+          </button>
+        )}
       </div>
 
       {isDemo && (
@@ -143,9 +237,30 @@ export function ReviewPanel({
             </button>
           </div>
           <div className="flex flex-col gap-5">
-            {review.capabilities.map((cap) => (
-              <CapabilityEvidenceBlock key={cap.name} capability={cap} onCopy={copyText} />
-            ))}
+            {review.capabilities.map((cap, capIndex) => {
+              const capKey = `cap-${capIndex}`;
+              const evidencePrefix = `${capKey}-ev-`;
+              const improvingTarget: number | "capability" | null =
+                improvingSection === capKey
+                  ? "capability"
+                  : improvingSection?.startsWith(evidencePrefix)
+                    ? Number(improvingSection.slice(evidencePrefix.length))
+                    : null;
+              return (
+                <CapabilityEvidenceBlock
+                  key={cap.name}
+                  capability={cap}
+                  onCopy={copyText}
+                  onImproveEvidence={(evidenceIndex, instruction) =>
+                    improveEvidence(capIndex, evidenceIndex, instruction)
+                  }
+                  onImproveCapability={(instruction) =>
+                    improveCapability(capIndex, instruction)
+                  }
+                  improvingTarget={improvingTarget}
+                />
+              );
+            })}
           </div>
         </section>
 
@@ -167,6 +282,18 @@ export function ReviewPanel({
           }
           isImproving={improvingSection === "reflection"}
         />
+
+        {onClear && (
+          <div className="flex justify-end pt-1">
+            <button
+              type="button"
+              onClick={onClear}
+              className="inline-flex shrink-0 items-center gap-2 rounded-full border border-border bg-card px-5 py-2 text-sm font-medium text-muted shadow-sm transition-colors hover:bg-muted/10 hover:text-foreground"
+            >
+              Clear
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

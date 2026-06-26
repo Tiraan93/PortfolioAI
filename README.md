@@ -49,7 +49,7 @@ GROQ_API_KEY=gsk_...
 
 | Provider | Cost | Setup |
 |----------|------|--------|
-| **OpenRouter** (default) | Free tier | `OPENROUTER_API_KEY` from [openrouter.ai/keys](https://openrouter.ai/keys); uses the `openrouter/free` model |
+| **OpenRouter** (default) | Pay-as-you-go | `OPENROUTER_API_KEY` from [openrouter.ai/keys](https://openrouter.ai/keys); uses the `deepseek/deepseek-v4-flash` model |
 | **Groq** | Free tier | `LLM_PROVIDER=groq` and `GROQ_API_KEY` from [console.groq.com](https://console.groq.com/keys) |
 | **Ollama** | Free, local | Install [Ollama](https://ollama.com), `ollama pull llama3.2`, set `LLM_PROVIDER=ollama` |
 | **OpenAI** | Paid | `LLM_PROVIDER=openai` and `OPENAI_API_KEY` |

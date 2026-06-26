@@ -57,9 +57,17 @@ ${capabilityBlock}
 - When generating multiple cases in a batch, each case must use different word descriptors from all previous cases in that batch.
 
 Other sections:
-- Keep the brief description concise but clinically coherent (roughly 80 to 150 words), written in first person.
+- Brief description: write a clinically coherent first person account of the case that is a MINIMUM of 4 lines (roughly 4 to 6 sentences, about 100 to 180 words). Cover the presentation, the relevant background and context, my assessment and reasoning, and what I did, so it reads as a complete short narrative rather than one or two sentences.
 - Provide 2 to 4 learning needs that are specific and actionable, written in first person where natural.
-- Write a reflection of roughly 80 to 120 words in a professional, reflective first person tone.
+- Reflection: write a genuine first person reflection that moves through the full Gibbs Reflective Cycle, in this order, as naturally flowing prose (not labelled headings or bullet points):
+  1. Description: briefly what happened in the case.
+  2. Feelings: what I was thinking and feeling at the time.
+  3. Evaluation: what went well and what was difficult about the experience.
+  4. Analysis: what sense I can make of it and why things happened, drawing on my clinical reasoning.
+  5. Conclusion: what else I could have done and what I have taken from it.
+  6. Action plan: concrete, specific things I will do differently or develop going forward.
+- The reflection must clearly demonstrate my growth and learning across these stages, ending in a more capable and insightful position than it began.
+- Aim for roughly 150 to 260 words. Write in a warm, natural, human first person voice that varies sentence length and sounds like a real trainee reflecting honestly, NOT a robotic checklist, rigid template, or formulaic list. Do NOT name or label the Gibbs stages in the output; let the reflection read as one continuous, authentic piece.
 
 Respond ONLY with valid JSON matching this exact schema:
 {
@@ -77,9 +85,6 @@ Respond ONLY with valid JSON matching this exact schema:
   "reflection": "Reflective paragraph"
 }`;
 }
-
-/** @deprecated Use buildGenerateReviewSystemPrompt — kept for static import sites */
-export const GENERATE_REVIEW_SYSTEM_PROMPT = buildGenerateReviewSystemPrompt("auto");
 
 export function buildGenerateReviewUserPrompt(
   caseDescription: string,
@@ -121,11 +126,30 @@ ${WRITING_RULES}
 - Return ONLY the improved section text, with no JSON wrapping, no markdown fences, and no commentary.`;
 
 export function buildImproveSectionUserPrompt(
-  section: "briefDescription" | "reflection",
+  section: "briefDescription" | "reflection" | "achievement",
   currentText: string,
   instruction: string,
   caseDescription?: string,
+  descriptor?: string,
 ): string {
+  if (section === "achievement") {
+    return `Improve the following "how achieved" evidence sentence from a GP portfolio case review.
+
+This sentence must show how I personally demonstrated the following fixed RCGP capability descriptor in this case. Do NOT change, restate, or quote the descriptor itself:
+${descriptor ?? "Not provided"}
+
+Original case notes (for context):
+${caseDescription ?? "Not provided"}
+
+Current sentence:
+${currentText}
+
+Improvement instruction:
+${instruction}
+
+Return ONLY the improved sentence as exactly ONE first person sentence stating how I demonstrated this descriptor in this case. No second sentence, no bullet points, no labels, no preamble.`;
+  }
+
   const sectionLabel = section === "briefDescription" ? "Brief Description" : "Reflection";
 
   return `Improve the following ${sectionLabel} section of a GP portfolio case review.

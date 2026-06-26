@@ -10,8 +10,9 @@ import { NextResponse } from "next/server";
  * starts / multiple regions).
  */
 
-const MAX_REQUESTS = 2;
-const WINDOW_SECONDS = 60;
+// Tunable without a redeploy via env vars (defaults: 2 requests / 60s per IP).
+const MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX) || 2;
+const WINDOW_SECONDS = Number(process.env.RATE_LIMIT_WINDOW_SECONDS) || 60;
 
 export type RateResult = {
   success: boolean;

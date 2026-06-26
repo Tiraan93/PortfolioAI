@@ -6,7 +6,11 @@ export function sanitizePortfolioReview(review: PortfolioReview): PortfolioRevie
     title: sanitizeGeneratedText(review.title),
     briefDescription: sanitizeGeneratedText(review.briefDescription),
     capabilities: review.capabilities.map((cap) => ({
-      name: sanitizeGeneratedText(cap.name),
+      // Capability names are fixed RCGP identifiers (already resolved to canonical
+      // form upstream). Do NOT run them through sanitizeGeneratedText: it strips
+      // hyphens, which corrupts "Decision-making and Diagnosis" and breaks the
+      // capability-name match in both manual and auto modes.
+      name: cap.name.trim(),
       evidence: cap.evidence.map((item) => ({
         level: item.level,
         descriptor: item.descriptor.trim(),

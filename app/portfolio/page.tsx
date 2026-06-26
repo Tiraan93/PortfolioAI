@@ -1,8 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CaseInput, initialCases, type CaseDraft } from "@/components/CaseInput";
+import {
+  CaseInput,
+  CASES_DRAFT_STORAGE_KEY,
+  initialCases,
+  type CaseDraft,
+} from "@/components/CaseInput";
 import { ReviewPanel } from "@/components/ReviewPanel";
+import { GeneratingLoader } from "@/components/GeneratingLoader";
 import type { DescriptorLevel, PortfolioReview } from "@/lib/schema";
 
 const RESULTS_STORAGE_KEY = "sca-portfolio-results";
@@ -139,6 +145,22 @@ export default function PortfolioPage() {
     }
   };
 
+  const handleClear = () => {
+    setCases(initialCases());
+    setDescriptorLevels(["competent"]);
+    setResults([]);
+    setActiveIndex(0);
+    setIsLoading(false);
+    setIsDemo(false);
+    setError(null);
+    setDemoInfo(null);
+    setDemoProvider(null);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(RESULTS_STORAGE_KEY);
+      localStorage.removeItem(CASES_DRAFT_STORAGE_KEY);
+    }
+  };
+
   const activeResult = results[activeIndex];
   const activeCase = cases.find((c) => c.id === activeResult?.caseId);
 
@@ -174,17 +196,41 @@ export default function PortfolioPage() {
     return null;
   };
 
+  const resultsBlock = (
+    <div className="flex flex-col gap-4">
+      {results.length > 1 && (
+        <div className="flex flex-wrap gap-2">
+          {results.map((result, index) => (
+            <button
+              key={result.caseId}
+              type="button"
+              onClick={() => setActiveIndex(index)}
+              className={`rounded-full px-4 py-1.5 text-xs font-medium transition-colors ${
+                index === activeIndex
+                  ? "bg-accent text-white"
+                  : "border border-border bg-card text-muted hover:text-accent-dark"
+              }`}
+            >
+              Case {index + 1}
+              {result.review.title ? `: ${result.review.title}` : ""}
+            </button>
+          ))}
+        </div>
+      )}
+
+      <ReviewPanel
+        review={activeResult?.review ?? null}
+        caseDescription={activeCase?.caseDescription ?? ""}
+        isDemo={isDemo}
+        onUpdateReview={updateActiveReview}
+        onClear={handleClear}
+        demoProvider={demoProvider}
+      />
+    </div>
+  );
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
-      <div className="mb-8">
-        <h1 className="font-serif text-3xl font-semibold text-navy">Portfolio AI</h1>
-        <p className="mt-4 max-w-2xl text-muted">
-          Enter your cases in the first person. Choose your capabilities or let the AI pick
-          the three most relevant. Each review uses exact RCGP word descriptors, unique across
-          a batch.
-        </p>
-      </div>
-
       {statusBanner()}
 
       {demoInfo && (
@@ -200,46 +246,26 @@ export default function PortfolioPage() {
       )}
 
       <div className="flex flex-col gap-8">
+        {isLoading && <GeneratingLoader />}
+
+        {/* After a review is generated, show it ABOVE the case input
+            (mirrors the loader position during generation). */}
+        {!isLoading && activeResult && resultsBlock}
+
         <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
           <CaseInput
             cases={cases}
             onChange={setCases}
             onSubmit={handleGenerate}
+            onClear={handleClear}
             isLoading={isLoading}
             descriptorLevels={descriptorLevels}
             onDescriptorLevelsChange={setDescriptorLevels}
           />
         </div>
 
-        <div className="flex flex-col gap-4">
-          {results.length > 1 && (
-            <div className="flex flex-wrap gap-2">
-              {results.map((result, index) => (
-                <button
-                  key={result.caseId}
-                  type="button"
-                  onClick={() => setActiveIndex(index)}
-                  className={`rounded-full px-4 py-1.5 text-xs font-medium transition-colors ${
-                    index === activeIndex
-                      ? "bg-accent text-white"
-                      : "border border-border bg-card text-muted hover:text-accent-dark"
-                  }`}
-                >
-                  Case {index + 1}
-                  {result.review.title ? `: ${result.review.title}` : ""}
-                </button>
-              ))}
-            </div>
-          )}
-
-          <ReviewPanel
-            review={activeResult?.review ?? null}
-            caseDescription={activeCase?.caseDescription ?? ""}
-            isDemo={isDemo}
-            onUpdateReview={updateActiveReview}
-            demoProvider={demoProvider}
-          />
-        </div>
+        {/* No review yet: keep the empty-state panel below the input. */}
+        {!isLoading && !activeResult && resultsBlock}
       </div>
     </div>
   );
