@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { ZodError } from "zod";
 import { allowInsecureLLMSSL, ensureLLMNetworking } from "@/lib/llm-fetch";
 
 export type LLMProvider = "openrouter" | "groq" | "openai" | "ollama";
@@ -9,7 +10,7 @@ const PROVIDER_CONFIG: Record<
 > = {
   openrouter: {
     baseURL: "https://openrouter.ai/api/v1",
-    defaultModel: "openrouter/free",
+    defaultModel: "deepseek/deepseek-v4-flash",
     apiKeyEnv: "OPENROUTER_API_KEY",
   },
   groq: {
@@ -52,7 +53,7 @@ export function getLLMProvider(): LLMProvider {
 export function getLLMProviderLabel(provider: LLMProvider = getLLMProvider()): string {
   switch (provider) {
     case "openrouter":
-      return "OpenRouter (free tier)";
+      return "OpenRouter (DeepSeek V4 Flash)";
     case "groq":
       return "Groq (free tier)";
     case "ollama":
@@ -135,6 +136,71 @@ export function supportsJsonResponseFormat(): boolean {
   return getLLMProvider() !== "ollama";
 }
 
+/** Portfolio reviews include long prose (reflection, brief description); avoid truncated JSON. */
+export const STRUCTURED_COMPLETION_MAX_TOKENS = 8192;
+
+type CompletionMessage = {
+  content?: string | null | Array<{ type?: string; text?: string }>;
+  reasoning?: string | null;
+  reasoning_content?: string | null;
+};
+
+export function extractCompletionText(
+  message: CompletionMessage | null | undefined,
+): string {
+  if (!message) return "";
+
+  const { content } = message;
+  if (typeof content === "string" && content.trim()) {
+    return content.trim();
+  }
+
+  if (Array.isArray(content)) {
+    const text = content
+      .map((part) => (typeof part?.text === "string" ? part.text : ""))
+      .join("")
+      .trim();
+    if (text) return text;
+  }
+
+  return "";
+}
+
+export function getStructuredCompletionParams(): Record<string, unknown> {
+  const params: Record<string, unknown> = {
+    max_tokens: STRUCTURED_COMPLETION_MAX_TOKENS,
+  };
+
+  if (supportsJsonResponseFormat()) {
+    params.response_format = { type: "json_object" };
+  }
+
+  const provider = getLLMProvider();
+  const model = getLLMModel().toLowerCase();
+  if (provider === "openrouter" && model.includes("deepseek")) {
+    // DeepSeek defaults to thinking mode; disable it so JSON lands in message.content.
+    params.reasoning = { enabled: false };
+  }
+
+  return params;
+}
+
+function extractJsonString(raw: string): string {
+  const trimmed = raw.trim();
+  if (!trimmed) return trimmed;
+
+  const fenceMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  if (fenceMatch?.[1]) return fenceMatch[1].trim();
+
+  if (trimmed.startsWith("{") && trimmed.endsWith("}")) return trimmed;
+
+  const start = trimmed.indexOf("{");
+  const end = trimmed.lastIndexOf("}");
+  if (start !== -1 && end > start) return trimmed.slice(start, end + 1);
+
+  return trimmed;
+}
+
 export function formatLLMError(error: unknown): string {
   const e = error as Record<string, unknown>;
 
@@ -174,7 +240,8 @@ export function formatLLMError(error: unknown): string {
     if (status === 404) {
       return `Model not found (${getLLMModel()}). Set LLM_MODEL in .env.local to a model your provider supports.`;
     }
-    return e?.message || `API error (${status}).`;
+    const message = e?.message;
+    return (isString(message) && message) || `API error (${status}).`;
   }
 
   if (e instanceof Error && e.message) return e.message;
@@ -186,13 +253,24 @@ export async function parseJsonFromModel<T>(
   content: string,
   parse: (data: unknown) => T,
 ): Promise<T> {
-  const trimmed = content.trim();
-  const jsonMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/);
-  const jsonString = jsonMatch ? jsonMatch[1].trim() : trimmed;
+  const jsonString = extractJsonString(content);
+  let data: unknown;
 
   try {
-    return parse(JSON.parse(jsonString));
+    data = JSON.parse(jsonString);
   } catch {
     throw new Error("Failed to parse AI response as JSON.");
+  }
+
+  try {
+    return parse(data);
+  } catch (error) {
+    if (error instanceof ZodError) {
+      const first = error.errors[0];
+      throw new Error(
+        first?.message ?? "AI response did not match the expected portfolio format.",
+      );
+    }
+    throw error;
   }
 }

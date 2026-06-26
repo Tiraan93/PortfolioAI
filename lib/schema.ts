@@ -75,7 +75,10 @@ export function buildDemoReview(caseIndex: number, totalCases: number): Portfoli
 
 export const caseInputSchema = z.object({
   id: z.string().optional(),
-  caseDescription: z.string().min(20, "Each case needs at least 20 characters of notes."),
+  caseDescription: z
+    .string()
+    .min(20, "Each case needs at least 20 characters of notes.")
+    .max(7000, "Case notes must be 7000 characters or fewer."),
   capabilityMode: capabilityModeSchema.default("auto"),
   selectedCapabilities: z.array(z.string().min(1)).optional(),
 });
@@ -104,10 +107,12 @@ export const generateReviewRequestSchema = z
 export type GenerateReviewRequest = z.infer<typeof generateReviewRequestSchema>;
 
 export const improveSectionRequestSchema = z.object({
-  section: z.enum(["briefDescription", "reflection"]),
-  currentText: z.string().min(1),
+  section: z.enum(["briefDescription", "reflection", "achievement"]),
+  currentText: z.string().min(1).max(7000),
   instruction: z.string().min(1).max(500),
-  caseDescription: z.string().optional(),
+  caseDescription: z.string().max(7000).optional(),
+  // For "achievement": the fixed RCGP descriptor the sentence must evidence (kept verbatim).
+  descriptor: z.string().max(2000).optional(),
 });
 
 export const improveSectionResponseSchema = z.object({

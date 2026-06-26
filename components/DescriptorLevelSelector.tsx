@@ -31,13 +31,6 @@ export function DescriptorLevelSelector({
 
   return (
     <fieldset className="space-y-2" disabled={disabled}>
-      <legend className="mb-2 block text-sm font-medium text-navy">
-        RCGP descriptor columns
-      </legend>
-      <p className="mb-3 text-xs text-muted">
-        Choose which word descriptor columns to use. Each capability quotes an exact
-        descriptor from these columns, plus one sentence on how you achieved it.
-      </p>
       <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-4">
         {LEVELS.map((level) => (
           <label

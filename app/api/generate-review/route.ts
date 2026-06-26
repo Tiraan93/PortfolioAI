@@ -8,15 +8,17 @@ import {
 } from "@/lib/prompts";
 import {
   formatLLMError,
+  extractCompletionText,
   getLLMClient,
   getLLMModel,
   getLLMProvider,
   getLLMProviderLabel,
+  getStructuredCompletionParams,
   hasLLMConfigured,
   parseJsonFromModel,
-  supportsJsonResponseFormat,
 } from "@/lib/llm";
 import { rateLimit, tooManyRequestsResponse } from "@/lib/rate-limit";
+import { isAllowedOrigin } from "@/lib/security";
 import {
   collectDuplicateDescriptorErrors,
   resolveLlmPortfolioReview,
@@ -26,13 +28,14 @@ import {
   sanitizePortfolioReview,
 } from "@/lib/sanitize-review";
 import type { CapabilityMode, DescriptorLevel, PortfolioReview } from "@/lib/schema";
+import { ZodError } from "zod";
 import {
   buildDemoReview,
   generateReviewRequestSchema,
   llmPortfolioReviewSchema,
 } from "@/lib/schema";
 
-const MAX_DESCRIPTOR_RETRIES = 1;
+const MAX_ATTEMPTS = 2;
 
 async function callModel(
   client: OpenAI,
@@ -44,48 +47,68 @@ async function callModel(
 ): Promise<PortfolioReview> {
   const { capabilityMode, selectedCapabilities } = caseOptions;
 
-  const completion = await client.chat.completions.create({
-    model: getLLMModel(),
-    temperature: 0.4,
-    ...(supportsJsonResponseFormat()
-      ? { response_format: { type: "json_object" as const } }
-      : {}),
-    messages: [
-      {
-        role: "system",
-        content: buildGenerateReviewSystemPrompt(capabilityMode, selectedCapabilities),
-      },
-      {
-        role: "user",
-        content: buildGenerateReviewUserPrompt(
-          caseDescription,
-          descriptorLevels,
-          usedDescriptors,
-          attempt > 0,
-          capabilityMode,
-          selectedCapabilities,
-        ),
-      },
-    ],
-  });
+  let review: PortfolioReview;
+  try {
+    const completion = await client.chat.completions.create({
+      model: getLLMModel(),
+      temperature: 0.4,
+      ...getStructuredCompletionParams(),
+      messages: [
+        {
+          role: "system",
+          content: buildGenerateReviewSystemPrompt(capabilityMode, selectedCapabilities),
+        },
+        {
+          role: "user",
+          content: buildGenerateReviewUserPrompt(
+            caseDescription,
+            descriptorLevels,
+            usedDescriptors,
+            attempt > 0,
+            capabilityMode,
+            selectedCapabilities,
+          ),
+        },
+      ],
+    });
 
-  const content = completion.choices[0]?.message?.content;
-  if (!content) {
-    throw new Error("Empty response from AI model.");
+    const content = extractCompletionText(completion.choices[0]?.message);
+    if (!content) {
+      throw new Error("Empty response from AI model.");
+    }
+
+    const llmReview = await parseJsonFromModel(content, (data) =>
+      llmPortfolioReviewSchema.parse(data),
+    );
+    review = sanitizePortfolioReview(resolveLlmPortfolioReview(llmReview));
+  } catch (error) {
+    if (attempt < MAX_ATTEMPTS - 1) {
+      return callModel(
+        client,
+        caseDescription,
+        descriptorLevels,
+        caseOptions,
+        usedDescriptors,
+        attempt + 1,
+      );
+    }
+    throw error;
   }
-
-  const llmReview = await parseJsonFromModel(content, (data) =>
-    llmPortfolioReviewSchema.parse(data),
-  );
-  const review = sanitizePortfolioReview(resolveLlmPortfolioReview(llmReview));
 
   const validationErrors = collectDuplicateDescriptorErrors(
     review,
     usedDescriptors,
     capabilityMode === "manual" ? selectedCapabilities : undefined,
   );
-  if (validationErrors.length > 0 && attempt < MAX_DESCRIPTOR_RETRIES) {
-    return callModel(client, caseDescription, descriptorLevels, caseOptions, usedDescriptors, attempt + 1);
+  if (validationErrors.length > 0 && attempt < MAX_ATTEMPTS - 1) {
+    return callModel(
+      client,
+      caseDescription,
+      descriptorLevels,
+      caseOptions,
+      usedDescriptors,
+      attempt + 1,
+    );
   }
 
   if (validationErrors.length > 0) {
@@ -127,6 +150,13 @@ async function generateReviews(
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isAllowedOrigin(request)) {
+      return NextResponse.json(
+        { error: "Request blocked: invalid origin." },
+        { status: 403 },
+      );
+    }
+
     const limit = await rateLimit(request, "generate-review");
     if (!limit.success) {
       return tooManyRequestsResponse(limit.resetMs);
@@ -153,6 +183,13 @@ export async function POST(request: NextRequest) {
       providerLabel: getLLMProviderLabel(provider),
     });
   } catch (error) {
+    // Invalid request body → clean 400 (don't leak the raw Zod error blob).
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: error.errors[0]?.message ?? "Invalid request.", demo: !hasLLMConfigured(), provider: getLLMProvider() },
+        { status: 400 },
+      );
+    }
     const message = formatLLMError(error);
     const status =
       message.includes("at least 20 characters") ||
@@ -163,7 +200,10 @@ export async function POST(request: NextRequest) {
       message.includes("Invalid descriptorIndex") ||
       message.includes("already used") ||
       message.includes("Duplicate descriptor") ||
-      message.includes("was not in your selected")
+      message.includes("was not in your selected") ||
+      message.includes("expected portfolio format") ||
+      message.includes("Provide exactly 3") ||
+      message.includes("Write one sentence")
         ? 400
         : message.includes("Invalid API key") || message.includes("access denied")
           ? 401
